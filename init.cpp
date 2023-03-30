@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <string>
 
 #include "init.h"
 
@@ -7,14 +8,14 @@
 bool initApp(App &app)
 {
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
-		printf("SDL initialize failure: %s\n", SDL_GetError());
+		std::cout << "SDL initialize failure: " << SDL_GetError() << std::endl;
 		return false;
 	}
 	
 	app.window = SDL_CreateWindow(GAME_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
 									  SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if(app.window == NULL) {
-		printf("Window could not be created: %s\n", SDL_GetError());
+		std::cout << "Window could not be created: " << SDL_GetError() << std::endl;
 		return false;
 	}
 
@@ -23,7 +24,15 @@ bool initApp(App &app)
 }
 
 // Load media onto the window
-bool loadMedia();
+bool loadMedia(App &app, std::string directory, std::string imageName)
+{
+	app.image = SDL_LoadBMP(directory + imageName);
+	if(app.image == NULL) {
+		std::cout << "Failed to load image: " << SDL_GetError() << std::endl;
+		return false;
+	}
+	return true;
+}
 
 // Free memories and shut down the program
 void closeProgram(App &app)

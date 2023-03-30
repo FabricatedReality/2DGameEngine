@@ -22,6 +22,11 @@ int main(int argc, char** argv)
 		return 0;
 	}
 
+	// Put the image on
+	SDL_BlitSurface(app.image, NULL, app.surface, NULL);
+	// Update the window
+	SDL_UpdateWindowSurface(app.surface);
+
 	SDL_Event e;
 	bool running = true;
 	while(running) {
