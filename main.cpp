@@ -1,31 +1,30 @@
+// System libraries
 #include <iostream>
 #include <new>
-
+// Libraries
+#include <SDL.h>
+// Project files
 #include "init.h"
 
-const int SCREEN_WIDTH = 1280;
-const int SCREEN_HEIGHT = 720;
-const char* GAME_NAME = "Game Engine";
-
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
-	App app = {nullptr, nullptr, nullptr};
+	App app;
 
 	if(!initApp(app)) {
 		std::cout << "Failed to initialize program" << std::endl;
-		closeProgram();
+		closeProgram(app);
 		return 0;
 	}
-	if(!loadMedia()) {
+	if(!loadMedia(app, "assets/", "test.bmp")) {
 		std::cout << "Failed to load image" << std::endl;
-		closeProgram();
+		closeProgram(app);
 		return 0;
 	}
 
 	// Put the image on
 	SDL_BlitSurface(app.image, NULL, app.surface, NULL);
 	// Update the window
-	SDL_UpdateWindowSurface(app.surface);
+	SDL_UpdateWindowSurface(app.window);
 
 	SDL_Event e;
 	bool running = true;
@@ -35,6 +34,6 @@ int main(int argc, char** argv)
 				running = false;
 	}
 
-	closeProgram();
+	closeProgram(app);
 	return 0;
 }

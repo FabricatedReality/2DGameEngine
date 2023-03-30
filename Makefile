@@ -5,12 +5,21 @@ SDL_PATH = -IC:\mingw_lib\sdl2\include\SDL2
 SDL_LIBRARY = -LC:\mingw_lib\sdl2\lib
 
 # -w suppresses warnings
-COMPILER_FLAGS = -w
-LINK_FLAGS = -lmingw32 -lSDL2main -lSDL2
+COMPILER_FLAGS = -Wall -Wextra -pedantic -std=c++11
 
-FILES = main.cpp app.cpp
+LINK_FLAGS = -lSDL2
 
 COMPILER = g++
 
-all : $(FILES)
-	$(COMPILER) $(FILES) $(SDL_PATH) $(SDL_LIBRARY) $(COMPILER_FLAGS) $(LINK_FLAGS) -o $(EXE_NAME)
+$(EXE_NAME): main.o init.o
+	$(COMPILER) $(COMPILER_FLAGS) $(SDL_PATH) $(SDL_LIBRARY) $(LINK_FLAGS) $^ -o $@ $(SDL_LIBRARY)
+
+main.o: main.cpp init.h
+	$(COMPILER) $(COMPILER_FLAGS) $(SDL_PATH) $(SDL_LIBRARY) $(LINK_FLAGS) -c main.cpp
+
+init.o: init.cpp init.h defs.h
+	$(COMPILER) $(COMPILER_FLAGS) $(SDL_PATH) $(SDL_LIBRARY) $(LINK_FLAGS) -c init.cpp
+
+.PHONY: clean
+clean:
+	rm *.o

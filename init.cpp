@@ -1,7 +1,3 @@
-#include <SDL2/SDL.h>
-#include <iostream>
-#include <string>
-
 #include "init.h"
 
 // Initialize SDL and create a window
@@ -26,7 +22,8 @@ bool initApp(App &app)
 // Load media onto the window
 bool loadMedia(App &app, std::string directory, std::string imageName)
 {
-	app.image = SDL_LoadBMP(directory + imageName);
+	std::string path = directory + imageName;
+	app.image = SDL_LoadBMP(path.c_str());
 	if(app.image == NULL) {
 		std::cout << "Failed to load image: " << SDL_GetError() << std::endl;
 		return false;
