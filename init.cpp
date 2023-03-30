@@ -8,8 +8,8 @@ bool initApp(App &app)
 		return false;
 	}
 	
-	app.window = SDL_CreateWindow(GAME_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
-									  SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	app.window = SDL_CreateWindow(constants::GAME_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
+								  constants::SCREEN_WIDTH, constants::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if(app.window == NULL) {
 		std::cout << "Window could not be created: " << SDL_GetError() << std::endl;
 		return false;
