@@ -8,7 +8,7 @@ SDL_LIBRARY = -LC:\mingw_lib\sdl2\lib
 COMPILER_FLAGS = -w
 LINK_FLAGS = -lmingw32 -lSDL2main -lSDL2
 
-FILES = main.c
+FILES = main.cpp app.cpp
 
 COMPILER = g++
 
