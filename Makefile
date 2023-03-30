@@ -1,16 +1,35 @@
-#EXE_NAME specifies the name of the executable 
-EXE_NAME = test
+# define the source files
+SRCS := $(wildcard *.cpp)
 
-SDL_PATH = -IC:\mingw_lib\sdl2\include\SDL2
-SDL_LIBRARY = -LC:\mingw_lib\sdl2\lib
+# define the object files
+OBJS := $(patsubst %.cpp, %.o, $(SRCS))
 
-# -w suppresses warnings
-COMPILER_FLAGS = -w
-LINK_FLAGS = -lmingw32 -lSDL2main -lSDL2
+# define the compiler
+CC = g++
 
-FILES = main.c
+# define the compiler flags
+CFLAGS = -Wall -Wextra -pedantic -std=c++11
 
-COMPILER = g++
+# define the include paths
+INCLUDE_PATHS = -IC:\mingw_lib\sdl2\include\SDL2
 
-all : $(FILES)
-	$(COMPILER) $(FILES) $(SDL_PATH) $(SDL_LIBRARY) $(COMPILER_FLAGS) $(LINK_FLAGS) -o $(EXE_NAME)
+# define the library paths
+LIBRARY_PATHS = -LC:\mingw_lib\sdl2\lib
+
+# define the linker flags
+LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2
+
+# define the target executable
+TARGET = game
+
+# build rule for object files
+%.o: %.cpp
+	$(CC) $(CFLAGS) $(INCLUDE_PATHS) -c -o $@ $<
+
+# build rule for the executable
+$(TARGET): $(OBJS)
+	$(CC) $(OBJS) $(LIBRARY_PATHS) $(LINKER_FLAGS) -o $(TARGET)
+
+# clean rule
+clean:
+	rm -f $(OBJS) $(TARGET)
