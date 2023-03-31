@@ -1,3 +1,5 @@
+#ifndef INIT_H
+#define INIT_H
 // System libraries
 #include <iostream>
 #include <string>
@@ -15,8 +17,12 @@ typedef struct SDLProgram{
 // Initialize SDL and create a window
 bool initApp(App &app);
 
+// Loads a surface
+SDL_Surface* loadSurface(std::string path);
+
 // Load media onto the window
-bool loadMedia(App &app, std::string directory, std::string imageName);
+bool loadMedia(SDL_Surface *(&keyPressSurfaces)[KEY_PRESS_TOTAL]);
 
 // Free memories and shut down the program
 void closeProgram(App &app);
+#endif

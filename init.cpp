@@ -8,7 +8,7 @@ bool initApp(App &app)
 		return false;
 	}
 	
-	app.window = SDL_CreateWindow(constants::GAME_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
+	app.window = SDL_CreateWindow(constants::GAME_TITLE.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
 								  constants::SCREEN_WIDTH, constants::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	if(app.window == NULL) {
 		std::cout << "Window could not be created: " << SDL_GetError() << std::endl;
@@ -19,13 +19,41 @@ bool initApp(App &app)
 	return true;
 }
 
-// Load media onto the window
-bool loadMedia(App &app, std::string directory, std::string imageName)
+// Loads a surface
+SDL_Surface* loadSurface(std::string path)
 {
-	std::string path = directory + imageName;
-	app.image = SDL_LoadBMP(path.c_str());
-	if(app.image == NULL) {
+	SDL_Surface* surface = SDL_LoadBMP(path.c_str());
+	if(surface == NULL)
 		std::cout << "Failed to load image: " << SDL_GetError() << std::endl;
+	return surface;
+}
+
+// Load media onto the window
+bool loadMedia(SDL_Surface *(&keyPressSurfaces)[KEY_PRESS_TOTAL])
+{
+	keyPressSurfaces[KEY_PRESS_DEFAULT] = loadSurface("assets/test.bmp");
+	if(keyPressSurfaces[KEY_PRESS_DEFAULT] == NULL) {
+		std::cout << "Failed to load default image" << std::endl;
+		return false;
+	}
+	keyPressSurfaces[KEY_PRESS_UP] = loadSurface("assets/up.bmp");
+	if(keyPressSurfaces[KEY_PRESS_UP] == NULL) {
+		std::cout << "Failed to load up image" << std::endl;
+		return false;
+	}
+	keyPressSurfaces[KEY_PRESS_DOWN] = loadSurface("assets/down.bmp");
+	if(keyPressSurfaces[KEY_PRESS_DOWN] == NULL) {
+		std::cout << "Failed to load down image" << std::endl;
+		return false;
+	}
+	keyPressSurfaces[KEY_PRESS_LEFT] = loadSurface("assets/left.bmp");
+	if(keyPressSurfaces[KEY_PRESS_LEFT] == NULL) {
+		std::cout << "Failed to load left image" << std::endl;
+		return false;
+	}
+	keyPressSurfaces[KEY_PRESS_RIGHT] = loadSurface("assets/right.bmp");
+	if(keyPressSurfaces[KEY_PRESS_RIGHT] == NULL) {
+		std::cout << "Failed to load right image" << std::endl;
 		return false;
 	}
 	return true;
