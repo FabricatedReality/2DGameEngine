@@ -21,17 +21,17 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	// Put the image on
-	SDL_BlitSurface(app.image, NULL, app.surface, NULL);
-	// Update the window
-	SDL_UpdateWindowSurface(app.window);
-
 	SDL_Event e;
 	bool running = true;
 	while(running) {
-		while(SDL_PollEvent(&e))
+		while(SDL_PollEvent(&e)) {
 			if(e.type == SDL_QUIT)
 				running = false;
+		}
+		// Put the image on
+		SDL_BlitSurface(app.image, NULL, app.surface, NULL);
+		// Update the window
+		SDL_UpdateWindowSurface(app.window);
 	}
 
 	closeProgram(app);
