@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
 
 	SDL_Event e;
 	bool running = true;
-	app.surface = keyPressSurfaces[KEY_PRESS_DEFAULT];
+	app.image = keyPressSurfaces[KEY_PRESS_DEFAULT];
 
 	while(running) {
 		while(SDL_PollEvent(&e) != 0) {
@@ -33,15 +33,15 @@ int main(int argc, char* argv[])
 				running = false;
 			} else if(e.type == SDL_KEYDOWN) {
 				if(e.key.keysym.sym == SDLK_UP)
-					app.surface = keyPressSurfaces[KEY_PRESS_UP];
+					app.image = keyPressSurfaces[KEY_PRESS_UP];
 				else if(e.key.keysym.sym == SDLK_DOWN)
-					app.surface = keyPressSurfaces[KEY_PRESS_DOWN];
+					app.image = keyPressSurfaces[KEY_PRESS_DOWN];
 				else if(e.key.keysym.sym == SDLK_LEFT)
-					app.surface = keyPressSurfaces[KEY_PRESS_LEFT];
+					app.image = keyPressSurfaces[KEY_PRESS_LEFT];
 				else if(e.key.keysym.sym == SDLK_RIGHT)
-					app.surface = keyPressSurfaces[KEY_PRESS_RIGHT];
+					app.image = keyPressSurfaces[KEY_PRESS_RIGHT];
 				else
-					app.surface = keyPressSurfaces[KEY_PRESS_DEFAULT];
+					app.image = keyPressSurfaces[KEY_PRESS_DEFAULT];
 			}
 			std::cout << app.image << std::endl;
 		}
