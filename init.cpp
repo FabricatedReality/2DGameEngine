@@ -1,7 +1,7 @@
 #include "init.h"
 
 // Initialize SDL and create a window
-bool initApp(App &app)
+bool initApp()
 {
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
 		std::cout << "SDL initialize failure: " << SDL_GetError() << std::endl;
@@ -22,10 +22,31 @@ bool initApp(App &app)
 // Loads a surface
 SDL_Surface* loadSurface(std::string path)
 {
-	SDL_Surface* surface = SDL_LoadBMP(path.c_str());
-	if(surface == NULL)
+	SDL_Surface* surface = NULL;
+	SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
+	if(loadedSurface == NULL) {
 		std::cout << "Failed to load image: " << SDL_GetError() << std::endl;
+	} else {
+		surface = SDL_ConvertSurface(loadedSurface, app.surface->format, 0);
+		if(surface == NULL) {
+			std::cout << "Unable to optimize image " << path << std::endl;
+			std::cout << SDL_GetError() << std::endl;
+		}
+		SDL_FreeSurface(loadedSurface);
+	}
 	return surface;
+}
+
+//change dest to a stretched version of SDL_Surface srcSur
+void stretchedSurface(SDL_Surface* srcSur, SDL_Surface* dest, int width, int height)
+{
+	SDL_Rect sizeRect;
+	sizeRect.x = 0;
+	sizeRect.y = 0;
+	sizeRect.w = width;
+	sizeRect.h = height;
+
+	SDL_BlitScaled(srcSur, NULL, dest, &sizeRect);
 }
 
 // Load media onto the window
@@ -60,7 +81,7 @@ bool loadMedia(SDL_Surface *(&keyPressSurfaces)[KEY_PRESS_TOTAL])
 }
 
 // Free memories and shut down the program
-void closeProgram(App &app)
+void closeProgram()
 {
 	SDL_FreeSurface(app.surface);
 	SDL_DestroyWindow(app.window);

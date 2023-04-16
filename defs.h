@@ -1,11 +1,20 @@
 #ifndef DEFS_H
 #define DEFS_H
 
+typedef struct SDLProgram{
+	SDL_Window* window = nullptr;
+	SDL_Surface* surface = nullptr;
+	SDL_Surface* image = nullptr;
+}App;
+
+extern App app;
+
 namespace constants{
 	const int SCREEN_WIDTH = 1280;
 	const int SCREEN_HEIGHT = 720;
 	const std::string GAME_TITLE = "Game Engine";
 }
+
 enum KeyPressed {
 	KEY_PRESS_DEFAULT,
 	KEY_PRESS_UP,

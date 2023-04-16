@@ -8,21 +8,18 @@
 // Project files
 #include "defs.h"
 
-typedef struct SDLProgram{
-	SDL_Window *window = nullptr;
-	SDL_Surface* surface = nullptr;
-	SDL_Surface* image = nullptr;
-}App;
-
 // Initialize SDL and create a window
-bool initApp(App &app);
+bool initApp();
 
 // Loads a surface
 SDL_Surface* loadSurface(std::string path);
+
+//change dest to a stretched version of SDL_Surface srcSur
+void stretchedSurface(SDL_Surface* srcSur, SDL_Surface* dest, int width, int height);
 
 // Load media onto the window
 bool loadMedia(SDL_Surface *(&keyPressSurfaces)[KEY_PRESS_TOTAL]);
 
 // Free memories and shut down the program
-void closeProgram(App &app);
+void closeProgram();
 #endif

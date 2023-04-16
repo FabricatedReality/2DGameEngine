@@ -7,19 +7,20 @@
 #include "init.h"
 #include "defs.h"
 
+App app;
+
 int main(int argc, char* argv[])
 {
-	App app;
 	SDL_Surface* keyPressSurfaces[KEY_PRESS_TOTAL];
 
-	if(!initApp(app)) {
+	if(!initApp()) {
 		std::cout << "Failed to initialize program" << std::endl;
-		closeProgram(app);
+		closeProgram();
 		return 0;
 	}
 	if(!loadMedia(keyPressSurfaces)) {
 		std::cout << "Failed to load image" << std::endl;
-		closeProgram(app);
+		closeProgram();
 		return 0;
 	}
 
@@ -43,14 +44,13 @@ int main(int argc, char* argv[])
 				else
 					app.image = keyPressSurfaces[KEY_PRESS_DEFAULT];
 			}
-			std::cout << app.image << std::endl;
 		}
 		// Put the image on
-		SDL_BlitSurface(app.image, NULL, app.surface, NULL);
+		stretchedSurface(app.image, app.surface, constants::SCREEN_WIDTH, constants::SCREEN_HEIGHT);
 		// Update the window
 		SDL_UpdateWindowSurface(app.window);
 	}
 
-	closeProgram(app);
+	closeProgram();
 	return 0;
 }
