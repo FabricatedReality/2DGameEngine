@@ -15,6 +15,12 @@ bool initApp()
 		return false;
 	}
 
+	int flags = IMG_INIT_PNG;
+	if((IMG_Init(flags)&flags) != flags) {
+		std::cout << "SDL_image could not be initialized: " << IMG_GetError() << std::endl;
+		return false;
+	}
+
 	app.surface = SDL_GetWindowSurface(app.window);
 	return true;
 }
@@ -23,9 +29,9 @@ bool initApp()
 SDL_Surface* loadSurface(std::string path)
 {
 	SDL_Surface* surface = NULL;
-	SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
+	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if(loadedSurface == NULL) {
-		std::cout << "Failed to load image: " << SDL_GetError() << std::endl;
+		std::cout << "Failed to load image" << path.c_str() << std::endl << IMG_GetError() << std::endl;
 	} else {
 		surface = SDL_ConvertSurface(loadedSurface, app.surface->format, 0);
 		if(surface == NULL) {

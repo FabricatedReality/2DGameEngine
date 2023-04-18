@@ -5,6 +5,7 @@
 #include <string>
 // Libraries
 #include <SDL.h>
+#include <SDL_image.h>
 // Project files
 #include "defs.h"
 
