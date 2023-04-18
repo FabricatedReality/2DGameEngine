@@ -3,6 +3,7 @@
 #include <new>
 // Libraries
 #include <SDL.h>
+#include <SDL_image.h>
 // Project files
 #include "init.h"
 #include "defs.h"

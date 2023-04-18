@@ -17,7 +17,7 @@ INCLUDE_PATHS = -IC:\mingw_lib\sdl2\include\SDL2
 LIBRARY_PATHS = -LC:\mingw_lib\sdl2\lib
 
 # define the linker flags
-LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2
+LINKER_FLAGS = -lmingw32 -lSDL2main -lSDL2 -lSDL2_image
 
 # define the target executable
 TARGET = game
