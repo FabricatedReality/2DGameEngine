@@ -3,8 +3,8 @@
 
 typedef struct SDLProgram{
 	SDL_Window* window = nullptr;
-	SDL_Surface* surface = nullptr;
-	SDL_Surface* image = nullptr;
+	SDL_Renderer* renderer = nullptr;
+	SDL_Texture* texture = nullptr;
 }App;
 
 extern App app;

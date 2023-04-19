@@ -12,7 +12,7 @@ App app;
 
 int main(int argc, char* argv[])
 {
-	SDL_Surface* keyPressSurfaces[KEY_PRESS_TOTAL];
+	SDL_Texture* keyPressSurfaces[KEY_PRESS_TOTAL];
 
 	if(!initApp()) {
 		std::cout << "Failed to initialize program" << std::endl;
@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 
 	SDL_Event e;
 	bool running = true;
-	app.image = keyPressSurfaces[KEY_PRESS_DEFAULT];
+	app.texture = keyPressSurfaces[KEY_PRESS_DEFAULT];
 
 	while(running) {
 		while(SDL_PollEvent(&e) != 0) {
@@ -35,23 +35,27 @@ int main(int argc, char* argv[])
 				running = false;
 			} else if(e.type == SDL_KEYDOWN) {
 				if(e.key.keysym.sym == SDLK_UP)
-					app.image = keyPressSurfaces[KEY_PRESS_UP];
+					app.texture = keyPressSurfaces[KEY_PRESS_UP];
 				else if(e.key.keysym.sym == SDLK_DOWN)
-					app.image = keyPressSurfaces[KEY_PRESS_DOWN];
+					app.texture = keyPressSurfaces[KEY_PRESS_DOWN];
 				else if(e.key.keysym.sym == SDLK_LEFT)
-					app.image = keyPressSurfaces[KEY_PRESS_LEFT];
+					app.texture = keyPressSurfaces[KEY_PRESS_LEFT];
 				else if(e.key.keysym.sym == SDLK_RIGHT)
-					app.image = keyPressSurfaces[KEY_PRESS_RIGHT];
+					app.texture = keyPressSurfaces[KEY_PRESS_RIGHT];
 				else
-					app.image = keyPressSurfaces[KEY_PRESS_DEFAULT];
+					app.texture = keyPressSurfaces[KEY_PRESS_DEFAULT];
 			}
 		}
-		// Put the image on
-		stretchedSurface(app.image, app.surface, constants::SCREEN_WIDTH, constants::SCREEN_HEIGHT);
-		// Update the window
-		SDL_UpdateWindowSurface(app.window);
+		// Clear screen
+		SDL_RenderClear(app.renderer);
+		// Render texture to screen
+		SDL_RenderCopy(app.renderer, app.texture, NULL, NULL);
+		// Update screen
+		SDL_RenderPresent(app.renderer);
 	}
 
 	closeProgram();
+	for(int i = 0; i < KEY_PRESS_TOTAL; i++)
+		SDL_DestroyTexture(keyPressSurfaces[i]);
 	return 0;
 }
